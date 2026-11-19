@@ -78,7 +78,7 @@ LeRobot uses [TorchCodec](https://github.com/meta-pytorch/torchcodec) for video 
 > [!NOTE]
 > **Platform support:** TorchCodec is **not available** on macOS Intel (x86_64) or Linux armv7l. On these platforms, LeRobot automatically falls back to `pyav` — so you do not need to install `ffmpeg` and can skip to Step 3.
 >
-> **Jetson (aarch64 + CUDA):** video decoding runs on CPU by default. [`docker/Dockerfile.jetson`](https://github.com/huggingface/lerobot/blob/main/docker/Dockerfile.jetson) builds `torch`/`torchcodec` from source with CUDA support for JetPack 6.2 — community-maintained, see [`ravediamond/lerobot-jetson`](https://github.com/ravediamond/lerobot-jetson) for the prebuilt image and issue [#819](https://github.com/huggingface/lerobot/issues/819) for background.
+> **Jetson (aarch64 + CUDA):** video decoding runs on CPU by default. The aarch64 `torchcodec` wheels that pip installs from PyPI (checked: 0.11.0 and 0.17.0) link against CUDA 13 (`libnvrtc.so.13`, `libcudart.so.13`), which JetPack 6 does not ship (it has CUDA 12.6), so on a Jetson Orin they fail to load and LeRobot falls back to `pyav`. [`docker/Dockerfile.jetson`](https://github.com/huggingface/lerobot/blob/main/docker/Dockerfile.jetson) builds `torch`/`torchcodec` from source with CUDA support for JetPack 6.2 — community-maintained, see [`ravediamond/lerobot-jetson`](https://github.com/ravediamond/lerobot-jetson) for the prebuilt image and issue [#819](https://github.com/huggingface/lerobot/issues/819) for background.
 
 If your platform supports TorchCodec, install `ffmpeg` using one of the methods below:
 
